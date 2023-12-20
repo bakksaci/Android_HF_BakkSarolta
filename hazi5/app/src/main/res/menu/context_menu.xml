@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/context_menu_red"
+        android:title="Piros"
+        android:icon="@drawable/piros" />
+    <item
+        android:id="@+id/context_menu_green"
+        android:title="Zöld"
+        android:icon="@drawable/zold" />
+    <item
+        android:id="@+id/context_menu_yellow"
+        android:title="Sárga"
+        android:icon="@drawable/sarga" />
+
+</menu>

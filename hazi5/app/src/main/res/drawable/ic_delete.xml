@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0">
+    <path
+        android:fillColor="#000000"
+        android:pathData="M8,18h8V20H8V18M17,4H15V13.17L13.59,11.7L12.17,13.12L14.17,15.12L13.41,15.88L11.41,13.88L9.41,15.88L8.66,15.12L10.66,13.12L9.24,11.7L7.24,13.7L6.5,12.94L8.5,10.94L7,9.46L8.41,8.04L9.17,8.79L11.17,10.79L13.17,8.79L13.93,9.54L12.5,11L14.5,13L16.5,11L15.07,9.54L16.33,8.29L17,9.46L15.5,10.94L17.5,12.94L16,14.41L17.41,15.83L18.17,15.08L17.17,14.08L17,13.91V4Z" />
+</selector>
+
+
+
+
+
+
+
+
+
+    Első lépésként hozz létre egy új Android projektet az Android Studio segítségével.
+
+    Készítsd el a listanézet XML-jét. Hozz létre egy új XML-fájlt (pl. activity_main.xml) a res/layout mappában. Az alábbi példa egy egyszerű listanézetet definiál egy TextView-vel:
+
+    xml
+    Copy code
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+
+<ListView
+    android:id="@+id/listView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
+</RelativeLayout>
+    Készítsd el a listaelemeket tartalmazó string-arrayet a res/values/strings.xml fájlban:
+    xml
+    Copy code
+<resources>
+<string-array name="list_items">
+    <item>Elem 1</item>
+    <item>Elem 2</item>
+    <item>Elem 3</item>
+    <!-- Írd ide további elemeket -->
+</string-array>
+</resources>
+
+
+    Készítsd el az Activity Java kódját (pl. MainActivity.java), amely létrehozza a listát és beállítja a kontextusmenüt és az opciós menüt:
+    java
+    Copy code
+    import android.os.Bundle;
+    import android.view.ContextMenu;
+    import android.view.Menu;
+    import android.view.MenuItem;
+    import android.view.View;
+    import android.widget.AdapterView;
+    import android.widget.ArrayAdapter;
+    import android.widget.ListView;
+    import androidx.annotation.NonNull;
+    import androidx.annotation.Nullable;
+    import androidx.appcompat.app.AppCompatActivity;
+
+    public class MainActivity extends AppCompatActivity {
+
+    private ListView listView;
+    private ArrayAdapter<String> adapter;
+
+@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+setContentView(R.layout.activity_main);
+
+listView = findViewById(R.id.listView);
+adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.list_items));
+    listView.setAdapter(adapter);
+
+    // Kontextusmenü regisztrálása a listához
+    registerForContextMenu(listView);
+    }
+
+    // Kontextusmenü létrehozása
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+    super.onCreateContextMenu(menu, v, menuInfo);
+    getMenuInflater().inflate(R.menu.context_menu, menu);
+    }
+
+    // Kontextusmenü elemek kezelése
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+    AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+    String selectedItem = adapter.getItem(info.position);
+
+    switch (item.getItemId()) {
+    case R.id.red:
+    // Változtasd meg a lista elemének színét pirosra
+    break;
+    case R.id.green:
+    // Változtasd meg a lista elemének színét zöldre
+    break;
+    case R.id.yellow:
+    // Változtasd meg a lista elemének színét sárgára
+    break;
+    }
+    return true;
+    }
+
+
+    // Opciós menü létrehozása
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.options_menu, menu);
+    return true;
+    }
+
+    // Opciós menü elemek kezelése
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    switch (item.getItemId()) {
+    case R.id.sort:
+    // Lista rendezése ábécé szerint
+    break;
+    case R.id.delete:
+    // Teljes lista törlése
+    break;
+    }
+    return true;
+    }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    Hozd létre a kontextusmenü és az opciós menü XML fájlokat a res/menu mappában. Példaként:
+    context_menu.xml:
+
+    xml
+    Copy code
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/red"
+            android:title="Piros"
+            android:icon="@drawable/ic_red" />
+        <item
+            android:id="@+id/green"
+            android:title="Zöld"
+            android:icon="@drawable/ic_green" />
+        <item
+            android:id="@+id/yellow"
+            android:title="Sárga"
+            android:icon="@drawable/ic_yellow" />
+    </menu>
+    options_menu.xml:
+
+    xml
+    Copy code
+    <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/sort"
+            android:title="Rendez"
+            android:icon="@drawable/ic_sort" />
+        <item
+            android:id="@+id/delete"
+            android:title="Töröl"
+            android:icon="@drawable/ic_delete" />
+    </menu>
+    schemas.android.com
